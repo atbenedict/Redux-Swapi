@@ -10,9 +10,13 @@ export const FETCH_CHAR_FAILURE = "FETCH_CHAR_FAILURE";
 export const getChars = () => dispatch => {
   dispatch({ type: FETCH_CHAR_START });
   axios
-    .get("https://swapi.co/api/people/")
-    .then(res => dispatch({ type: FETCH_CHAR_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: FETCH_CHAR_FAILURE, payload: err }));
+    .get("https://swapi.co/api/people")
+    .then(({ data }) => {
+      dispatch({ type: FETCH_CHAR_SUCCESS, payload: data.results });
+    })
+    .catch(err => {
+      dispatch({ type: FETCH_CHAR_FAILURE, payload: err });
+    });
 };
 // our action creator will be a function that returns a function
 // the url to fetch characters from is `https://swapi.co/api/people/`
